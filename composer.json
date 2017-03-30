@@ -13,7 +13,11 @@
   "require": {
     "smarty/smarty": "v3.1.*"
   },
+  "suggest": {
+    "codeigniter/framework": "This library for CodeIgniter 3.1.x"
+  },
   "require-dev": {
+    "codeigniter/framework": "^3.1",
     "muraveiko/codeigniter-phpstorm": "0.1.*-dev"
   },
   "autoload": {
@@ -23,7 +27,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "0.0.4-dev"
+      "dev-master": "0.0.5-dev"
     }
   }
 }

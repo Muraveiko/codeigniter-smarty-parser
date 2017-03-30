@@ -16,14 +16,29 @@ namespace Muraveiko\Smarty;
 class Parser extends \CI_Parser
 {
 
+    /**
+     * @var string  Default extension of templates if one isn't supplied
+     */
     public $template_ext = '.php';
+
+    /**
+     * @var string  for use with MX_Controller
+     */
     protected $_module = '';
+
+    /**
+     * @var array
+     */
     protected $_template_locations = array();
 
-    // Current theme location
+    /**
+     * @var sting|null Current theme location
+     */
     protected $_current_path = NULL;
 
-    // The name of the theme in use
+    /**
+     * @var string   The name of the theme in use
+     */
     protected $_theme_name = '';
 
     /**
@@ -53,7 +68,16 @@ class Parser extends \CI_Parser
      */
     protected $smarty;
 
+    /**
+     * What controllers are in use
+     * @var string
+     */
     protected $_controller;
+
+    /**
+     * What  methods are in use
+     * @var string
+     */
     protected $_method;
 
     // --------------------------------------------------------------------
@@ -122,6 +146,9 @@ class Parser extends \CI_Parser
         log_message('info', 'MY_Parser class loaded');
     }
 
+    /* =====================================================================================================
+     *                                    FOR USE AS SMARTY
+       ==================================================================================================== */
 
     /**
      * Call
@@ -142,6 +169,7 @@ class Parser extends \CI_Parser
 
 
     /**
+     * Smarty variables set
      * @param $name
      * @param $value
      */
@@ -153,6 +181,7 @@ class Parser extends \CI_Parser
     }
 
     /**
+     * Smarty variables get
      * @param $name
      * @return mixed
      */
@@ -162,6 +191,8 @@ class Parser extends \CI_Parser
     }
 
     /**
+     * Smarty variable isset
+     *
      * @param $name
      * @return bool
      */
@@ -171,6 +202,8 @@ class Parser extends \CI_Parser
     }
 
     /**
+     * Smarty variable unset
+     *
      * @param $name
      */
     public function __unset($name)
@@ -178,71 +211,9 @@ class Parser extends \CI_Parser
         unset($this->smarty->$name);
     }
 
-    /**
-     * Parse
-     *
-     * Parses a template using Smarty 3 engine
-     *
-     * @param string $template
-     * @param array $data
-     * @param boolean $return
-     * @return string
-     */
-    public function parse($template, $data, $return = FALSE)
-    {
-        // If no file extension dot has been found default to defined extension for view extensions
-        if (!stripos($template, '.')) {
-            $template = $template . "." . $this->template_ext;
-        }
-
-        // If we have variables to assign, lets assign them
-        if (!empty($data)) {
-            foreach ($data AS $key => $val) {
-                $this->smarty->assign($key, $val);
-            }
-        }
-
-        $template_string = $this->smarty->fetch($template);
-
-        if (FALSE === $return) {
-            $this->CI->output->append_output($template_string);
-            return TRUE;
-        }
-
-        return $template_string;
-
-    }
-
-    /**
-     * Parse a String
-     *
-     * Parses pseudo-variables contained in the specified string,
-     * replacing them with the data in the second param
-     *
-     * @param    string
-     * @param    array
-     * @param    bool
-     * @return    string
-     */
-    public function parse_string($template, $data, $return = FALSE)
-    {
-        return $this->_parse($template, $data, $return);
-    }
-
-
-    /**
-     * Set the left/right variable delimiters
-     *
-     * @param    string
-     * @param    string
-     * @return    void
-     */
-    public function set_delimiters($l = '{', $r = '}')
-    {
-        $this->l_delim = $l;
-        $this->r_delim = $r;
-    }
-
+    /* =====================================================================================================
+     *                                  Additional Functionality
+       ==================================================================================================== */
 
     /**
      * Set Theme
@@ -399,5 +370,75 @@ class Parser extends \CI_Parser
         // Will add paths into Smarty for "smarter" inheritance and inclusion
         $this->_add_paths();
     }
+
+    /* =====================================================================================================
+     *                                  CI_PARSER EXTENDS
+       ==================================================================================================== */
+
+    /**
+     * Parse
+     *
+     * Parses a template using Smarty 3 engine
+     *
+     * @param string $template
+     * @param array $data
+     * @param boolean $return
+     * @return string
+     */
+    public function parse($template, $data, $return = FALSE)
+    {
+        // If no file extension dot has been found default to defined extension for view extensions
+        if (!stripos($template, '.')) {
+            $template = $template . "." . $this->template_ext;
+        }
+
+        // If we have variables to assign, lets assign them
+        if (!empty($data)) {
+            foreach ($data AS $key => $val) {
+                $this->smarty->assign($key, $val);
+            }
+        }
+
+        $template_string = $this->smarty->fetch($template);
+
+        if (FALSE === $return) {
+            $this->CI->output->append_output($template_string);
+            return TRUE;
+        }
+
+        return $template_string;
+
+    }
+
+    /**
+     * Parse a String
+     *
+     * Parses pseudo-variables contained in the specified string,
+     * replacing them with the data in the second param
+     *
+     * @param    string
+     * @param    array
+     * @param    bool
+     * @return    string
+     */
+    public function parse_string($template, $data, $return = FALSE)
+    {
+        return $this->_parse($template, $data, $return);
+    }
+
+
+    /**
+     * Set the left/right variable delimiters
+     *
+     * @param    string
+     * @param    string
+     * @return    void
+     */
+    public function set_delimiters($l = '{', $r = '}')
+    {
+        $this->l_delim = $l;
+        $this->r_delim = $r;
+    }
+
 
 }
