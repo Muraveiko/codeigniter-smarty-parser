@@ -1,6 +1,7 @@
 {
   "name": "muraveiko/codeigniter-smarty-parser",
   "type": "library",
+  "minimum-stability" : "dev",
   "description": "Smarty templating for Codeigniter as CI_Parser",
   "license": "MIT",
   "authors": [
@@ -12,6 +13,9 @@
   "require": {
     "smarty/smarty": "v3.1.*"
   },
+  "require-dev": {
+    "muraveiko/codeigniter-phpstorm": "0.1.*-dev"
+  },
   "autoload": {
     "psr-4": {
       "Muraveiko\\Smarty\\": "Smarty/"
@@ -19,7 +23,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "0.0.3-dev"
+      "dev-master": "0.0.4-dev"
     }
   }
 }

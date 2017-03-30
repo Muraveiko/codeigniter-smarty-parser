@@ -13,7 +13,7 @@ namespace Muraveiko\Smarty;
  *
  * использованы части кода CI Smarty (Dwayne Charrington)	
  */
-class Parser extends CI_Parser
+class Parser extends \CI_Parser
 {
 
     public $template_ext = '.php';
@@ -43,13 +43,13 @@ class Parser extends CI_Parser
     /**
      * Reference to CodeIgniter instance
      *
-     * @var CI_Controller
+     * @var \CI_Controller
      */
     protected $CI;
 
 
     /**
-     * @var Smarty
+     * @var \Smarty
      */
     protected $smarty;
 
@@ -96,7 +96,7 @@ class Parser extends CI_Parser
         // This will fix various issues like filemtime errors that some people experience
         // The cause of this is most likely setting the error_reporting value above
         // This is a static function in the main Smarty class
-        Smarty::muteExpectedErrors();
+        \Smarty::muteExpectedErrors();
 
 
         // Should let us access Codeigniter stuff in views
@@ -130,7 +130,7 @@ class Parser extends CI_Parser
      * @param string $method
      * @param array $params
      * @return mixed
-     * @throws Exception  if method not exists in Smarty
+     * @throws \Exception  if method not exists in Smarty
      */
     public function __call($method, $params = array())
     {
