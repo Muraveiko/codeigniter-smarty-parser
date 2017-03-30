@@ -1,4 +1,5 @@
 <?php
+
 namespace Muraveiko\Smarty;
 /**
  * Smarty_Parser
@@ -11,7 +12,7 @@ namespace Muraveiko\Smarty;
  * @author    Antson
  * @license   MIT
  *
- * использованы части кода CI Smarty (Dwayne Charrington)	
+ * использованы части кода CI Smarty (Dwayne Charrington)
  */
 class Parser extends \CI_Parser
 {
@@ -32,7 +33,7 @@ class Parser extends \CI_Parser
     protected $_template_locations = array();
 
     /**
-     * @var sting|null Current theme location
+     * @var string|null Current theme location
      */
     protected $_current_path = NULL;
 
@@ -85,7 +86,6 @@ class Parser extends \CI_Parser
     /**
      * Class constructor
      *
-     * @return    void
      */
 
     public function __construct()
@@ -94,7 +94,7 @@ class Parser extends \CI_Parser
         $this->smarty = new \Smarty();
 
         // Load the Smarty config file
-        $this->CI->load->config('smarty');
+        $this->CI->config->load('smarty');
 
         // Default template extension
         $this->template_ext = $this->CI->config->item('smarty.template_ext');
@@ -382,11 +382,17 @@ class Parser extends \CI_Parser
      *
      * @param string $template
      * @param array $data
-     * @param boolean $return
+     * @param boolean $return  TRUE - fetch template
      * @return string
      */
-    public function parse($template, $data=null, $return = FALSE)
+    public function parse($template = '', $data = null, $return = FALSE)
     {
+
+        // If empty then Default template name
+        if ("" == $template) {
+            $template = $this->_controller . DIRECTORY_SEPARATOR . $this->_method;
+        }
+
         // If no file extension dot has been found default to defined extension for view extensions
         if (!stripos($template, '.')) {
             $template = $template . "." . $this->template_ext;
