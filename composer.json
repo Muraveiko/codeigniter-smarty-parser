@@ -12,9 +12,14 @@
   "require": {
     "smarty/smarty": "v3.1.*"
   },
+  "autoload": {
+    "psr-4": {
+      "Muraveiko\\Smarty\\": "Smarty/"
+    }
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "0.0.2-dev"
+      "dev-master": "0.0.3-dev"
     }
   }
 }
