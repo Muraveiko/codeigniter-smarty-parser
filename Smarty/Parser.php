@@ -385,7 +385,7 @@ class Parser extends \CI_Parser
      * @param boolean $return
      * @return string
      */
-    public function parse($template, $data, $return = FALSE)
+    public function parse($template, $data=null, $return = FALSE)
     {
         // If no file extension dot has been found default to defined extension for view extensions
         if (!stripos($template, '.')) {
