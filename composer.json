@@ -1,0 +1,23 @@
+{
+  "name": "muraveiko/codeigniter-smarty-parser",
+  "type": "library",
+  "description": "Smarty templating for Codeigniter as CI_Parser",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Oleg Muraveyko",
+      "email": "oleg@muraveyko.ru"
+    }
+  ],
+  "require": {
+    "smarty/smarty": "v3.1.*"
+  },
+  "autoload": {
+        "psr-0": { "Muraveiko": "src" }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.0.1-dev"
+    }
+  }
+}
