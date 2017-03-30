@@ -1,3 +1,3 @@
 <?php
-class MY_Parser extends Muraveiko\Smarty_Parser{
+class MY_Parser extends Muraveiko\Smarty\Parser{
 }

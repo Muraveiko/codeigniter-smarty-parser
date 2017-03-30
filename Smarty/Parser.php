@@ -1,5 +1,5 @@
 <?php
-namespace Muraveiko;
+namespace Muraveiko\Smarty;
 /**
  * Smarty_Parser
  *
@@ -13,7 +13,7 @@ namespace Muraveiko;
  *
  * использованы части кода CI Smarty (Dwayne Charrington)	
  */
-class Smarty_Parser extends CI_Parser
+class Parser extends CI_Parser
 {
 
     public $template_ext = '.php';
