@@ -99,8 +99,6 @@ class Parser extends \CI_Parser
         // Default template extension
         $this->template_ext = $this->CI->config->item('smarty.template_ext');
 
-        // Turn on/off debug
-        $this->smarty->debugging = $this->CI->config->item('smarty.smarty_debug');
 
         // Set some pretty standard Smarty directories
         $this->smarty->setCompileDir($this->CI->config->item('smarty.compile_directory'));
@@ -108,25 +106,27 @@ class Parser extends \CI_Parser
         $this->smarty->setConfigDir($this->CI->config->item('smarty.config_directory'));
 
 
+        // Use or not cache
+        $this->smarty->caching  = $this->CI->config->item('smarty.cache_status');
         // How long to cache templates for
         $this->smarty->cache_lifetime = $this->CI->config->item('smarty.cache_lifetime');
 
         // Disable Smarty security policy
         $this->smarty->disableSecurity();
 
+        // Turn on/off debug
+        $this->smarty->debugging = $this->CI->config->item('smarty.smarty_debug');
         // Set the error reporting level
         $this->smarty->error_reporting = $this->CI->config->item('smarty.template_error_reporting');
+
+        // Force ccompile templates
+        $this->smarty->force_compile  = $this->CI->config->item('smarty.force_compile');
 
         // This will fix various issues like filemtime errors that some people experience
         // The cause of this is most likely setting the error_reporting value above
         // This is a static function in the main Smarty class
         \Smarty::muteExpectedErrors();
 
-
-        // Should let us access Codeigniter stuff in views
-        // This means we can go for example {$this->session->userdata('item')}
-        // just like we normally would in standard CI views
-        $this->smarty->assign("this", $this->CI);
 
         // Detect if we have a current module
         $this->_module = $this->current_module();
@@ -135,15 +135,17 @@ class Parser extends \CI_Parser
         $this->_controller = $this->CI->router->class;
         $this->_method = $this->CI->router->method;
 
-        // If we don't have a theme name stored
-        if ($this->_theme_name == '') {
-            $this->set_theme($this->CI->config->item('smarty.theme_name'));
-        }
+        $this->set_theme($this->CI->config->item('smarty.theme_name'));
 
         // Update theme paths
         $this->_update_theme_paths();
 
-        log_message('info', 'MY_Parser class loaded');
+        // Should let us access Codeigniter stuff in views
+        // This means we can go for example {$this->session->userdata('item')}
+        // just like we normally would in standard CI views
+        $this->smarty->assign("this", $this->CI);
+
+        log_message('info', 'SmartyParser class loaded');
     }
 
     /* =====================================================================================================
@@ -237,9 +239,9 @@ class Parser extends \CI_Parser
 
         // If we have a functions file, include it
         if (file_exists($functions_file)) {
-            include_once($functions_file);
+            include($functions_file);
         } elseif (file_exists($functions_file2)) {
-            include_once($functions_file2);
+            include($functions_file2);
         }
 
         // Update theme paths
