@@ -381,6 +381,7 @@ class Parser extends \CI_Parser
      * Parse
      *
      * Parses a template using Smarty 3 engine
+     * assign variable to template object scope !!
      *
      * @param string $template
      * @param array $data
@@ -400,14 +401,17 @@ class Parser extends \CI_Parser
             $template = $template . "." . $this->template_ext;
         }
 
+        // assign variable to template object scope
+        $tpl = $this->smarty->createTemplate($template);
+
         // If we have variables to assign, lets assign them
         if (!empty($data)) {
             foreach ($data AS $key => $val) {
-                $this->smarty->assign($key, $val);
+                $tpl->assign($key, $val);
             }
         }
 
-        $template_string = $this->smarty->fetch($template);
+        $template_string = $tpl->fetch();
 
         if (FALSE === $return) {
             $this->CI->output->append_output($template_string);
